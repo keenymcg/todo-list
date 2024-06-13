@@ -37,7 +37,8 @@ class ToDoItem {
     }
 };
 
-window.task1 = new ToDoItem("Mow Lawn", "Time to mow the lawn", null, null, null, null) 
+// const task1 = new ToDoItem("Mow Lawn", "Time to mow the lawn", null, null, null, null) 
+// console.log(`ToDoItem Class Test "${task1.title}" is the title.`)
 
 class Project {
     constructor(name) {
@@ -56,7 +57,7 @@ class Project {
     editProject(newName) {
         this.name = newName;
     }
-}
+};
 
 class ToDoListApp {
     constructor() {
@@ -87,6 +88,6 @@ function createProject(name) {
     return new Project(name);
 }
 
-
+module.exports = { ToDoItem, Project, ToDoListApp };
 
 
