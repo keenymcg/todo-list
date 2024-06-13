@@ -52,7 +52,7 @@ module.exports = {
     ],
     devServer: {
         static: {
-     // './dist', // Shorter way to serve static files from 'dist' directory
+            // './dist', // Shorter way to serve static files from 'dist' directory
             directory: path.join(__dirname, 'dist'), // Serve static files from 'dist' directory
         },
         compress: true, // Enables gzip compression.

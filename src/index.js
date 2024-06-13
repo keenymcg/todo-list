@@ -37,7 +37,7 @@ class ToDoItem {
     }
 };
 
-window.task1 = new ToDoItem("Mow Lawn", "Time to mow the lawn bitch", null, null, null, null) 
+window.task1 = new ToDoItem("Mow Lawn", "Time to mow the lawn", null, null, null, null) 
 
 class Project {
     constructor(name) {
