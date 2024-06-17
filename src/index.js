@@ -136,6 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const project1 = createProject("Home");
     const project2 = createProject("Work");
     project1.todoItems.push(task1); // Giving project1 ownership of task1
+    project2.todoItems.push(task2); // Giving project2 ownership of task2
     console.log(project1); // Successfully added task1 to project1
 
     const todoListApp = new ToDoListApp();
@@ -155,33 +156,39 @@ document.addEventListener('DOMContentLoaded', () => {
                     const h2 = document.createElement('h2');
                     h2.textContent = project.name;
                     content.appendChild(h2);
-                })
+
+                    // Display title and dueDate for the todoItems for each project
+                    project.todoItems.forEach(item => { // NEED TO ADD FUNC TO EDIT THE TODOITEMS
+                        const div = document.createElement('div');
+                        const h3 = document.createElement('h3');
+                        const h4 = document.createElement('h4');
+
+                        h3.textContent = item.title;
+                        h4.textContent = item.dueDate;
+
+                        div.appendChild(h3);
+                        div.appendChild(h4);
+
+                        div.style.border = '1px solid black'; // Add border style
+
+                        content.appendChild(div);
+                    })
+                });
                 const projectsList = document.querySelectorAll('h2');
                 projectsList.forEach((project) => {
                     project.addEventListener('click', (e) => {
                         console.log("You clicked"); // Success
                         content.innerHTML = '';
                         const projectIndex = todoListApp.projects.findIndex(project => project.name === e.target.textContent);
-                        // console.log(itemsContent(todoListApp.projects[projectIndex].todoItems));
+                        // console.log(itemsContent(todoListApp.projects[projectIndex].todoItems)); // Success
                         content.appendChild(itemsContent(todoListApp.projects[projectIndex].todoItems));
-        })
-    })
+                    })
+                })
             } else if (e.target.textContent === '???') {
                 return
-            } else if (e.target.textContent === '??????') {
-                return
+            } else if (e.target.textContent === 'Show All To Do Items') {
+                content.appendChild(itemsContent([task1, task2]));
             }
         });
     });
-
-    const projectsList = document.querySelectorAll('h2');
-    projectsList.forEach((project) => {
-        project.addEventListener('click', (e) => {
-            console.log("You clicked");
-            content.innerHTML = '';
-            const projectIndex = todoListApp.projects.findIndex(project => project.name === e.target.textContent);
-            console.log(itemsContent(todoListApp.projects[projectIndex].todoItems));
-            // content.appendChild(itemsContent(todoListApp.projects[projectIndex].todoItems));
-        })
-    })
 });
