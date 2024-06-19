@@ -103,13 +103,13 @@ class ToDoListApp {
 };
 
 // Factory Functions - clean way to create instances of objects
-// for example when accepting user input, write: document.getElementById('todoForm').addEventListener('submit', function(event) { event.preventDefault();...
-// const title = document.getElementById('title').value;
-// const description = document.getElementById('description').value;
-// const dueDate = document.getElementById('dueDate').value;
-// const priority = document.getElementById('priority').value;
-// then run the func: createToDoItem(title, description, dueDate, priority); <-- looks a little different than this example
-// console.log(todoItem);
+    // for example when accepting user input, write: document.getElementById('todoForm').addEventListener('submit', function(event) { event.preventDefault();...
+    // const title = document.getElementById('title').value;
+    // const description = document.getElementById('description').value;
+    // const dueDate = document.getElementById('dueDate').value;
+    // const priority = document.getElementById('priority').value;
+    // then run the func: createToDoItem(title, description, dueDate, priority); <-- looks a little different than this example
+    // console.log(todoItem);
 function createTodoItem(title, description, dueDate, priority, notes = [], checklist = []) {
     return new ToDoItem(title, description, dueDate, priority, notes, checklist);
 }
