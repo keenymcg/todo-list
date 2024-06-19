@@ -21,8 +21,6 @@ export default function projectContent(projects) {
             div.appendChild(h3);
             div.appendChild(h4);
 
-            div.style.border = '1px solid black'; // Add border style
-
             container.appendChild(div);
         })
     });
