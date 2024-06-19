@@ -1,5 +1,5 @@
 
-import './styles/style.css';
+import './styles/style.scss';
 import { ToDoItem, Project, ToDoListApp } from './classes.js';
 
 // Factory Functions - clean way to create instances of objects
