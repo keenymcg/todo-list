@@ -25,8 +25,12 @@ module.exports = {
                 }
             },
             {
-                test: /\.css$/, // see step 7 in Webpack Cheatsheet
-                use: ['style-loader', 'css-loader'],
+                test: /\.scss$/, // see step 7 in Webpack Cheat-sheet
+                use: [
+                    'style-loader', 
+                    'css-loader', // Translates CSS into CommonJS
+                    'sass-loader' // Compiles Sass to CSS
+                ],
             },
             {
                 test: /\.(png|jpg|jpeg|gif|svg)$/, // Add support for image files
