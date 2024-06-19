@@ -52,8 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.target.textContent === 'Projects') {
                 content.appendChild(projectContent(todoListApp.projects)); // Display all projects
                 addProjectClickListener(todoListApp, content); // Add event listener to each project name to display project's todoItems
-            } else if (e.target.textContent === '???') {
-                return
             } else if (e.target.textContent === 'Show All To Do Items') {
                 content.appendChild(itemsContent([task1, task2]));
             }
