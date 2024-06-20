@@ -55,17 +55,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const navItems = document.querySelectorAll('nav button');
     navItems.forEach((item) => {
         item.addEventListener('click', (e) => {
-            content.innerHTML = '';
 
             if (e.target.textContent === 'Projects') {
+                content.innerHTML = '';
                 content.appendChild(projectContent(todoListApp.projects)); // Display all projects
                 addProjectClickListener(todoListApp, content); // Add event listener to each project name to display project's todoItems
             } else if (e.target.textContent === 'Show All To Do Items') {
+                content.innerHTML = '';
                 content.appendChild(itemsContent([task1, task2]));
             } else if (e.target.textContent === '+ New Project') {
                 console.log('New Project Button Clicked');
                 const projAdd = document.getElementById('projAdd')
-                projAdd.appendChild(projectAdd(todoListApp)); 
+                projAdd.appendChild(projectAdd(todoListApp));
             }
         });
     });
