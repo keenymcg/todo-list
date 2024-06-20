@@ -1,9 +1,23 @@
+import { formatDistanceToNow } from 'date-fns';
 
 function itemsContent(items) {
-
+    
     const container = document.createElement('div');
 
     items.forEach(item => {
+        function pastOrPresent() {
+            const now = new Date();
+            const itemDate = new Date(item.dueDate);
+            const distance = formatDistanceToNow(itemDate, { addSuffix: true });
+    
+            if (itemDate > now) {
+                return distance.replace('about', '').replace('over', ''); // "in 1 day", "in 2 days", etc.
+            } else {
+                return distance.replace('about', '').replace('over', ''); // "1 day ago", "2 days ago", etc.
+            }
+        };
+
+
         const div = document.createElement('div');
         const h3 = document.createElement('h3');
         const p = document.createElement('p');
@@ -12,7 +26,7 @@ function itemsContent(items) {
 
         h3.textContent = item.title;
         p.textContent = item.description;
-        h4.textContent = item.dueDate;
+        h4.textContent = `Due ${pastOrPresent()} on ${item.dueDate}`;
         h5.textContent = `Priority: ${item.priority}`;
 
         div.appendChild(h3);

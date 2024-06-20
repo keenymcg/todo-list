@@ -1,6 +1,7 @@
-
+import { format } from 'date-fns';
 import './styles/style.scss';
 import { ToDoItem, Project, ToDoListApp } from './classes.js';
+
 
 // Factory Functions - clean way to create instances of objects
     // for example when accepting user input, write: document.getElementById('todoForm').addEventListener('submit', function(event) { event.preventDefault();...
@@ -27,8 +28,10 @@ import addProjectClickListener from './projClickListener.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const content = document.getElementById('content'); // Get the content div
-    const task1 = createTodoItem("Mow Lawn", "Time to mow the lawn", "Today", "High", ["Don't forget to wear sunscreen"], ["Wear sunscreen", "Mow the lawn"]) 
-    const task2 = createTodoItem("Scratch cat", "Let's scratch the cat", "Today", "High", ["Don't forget to feed the cat"], ["Feed the cat"])
+    const date = new Date(2024, 5, 27);
+    const formattedDate = format(date, 'MMMM d, yyyy');
+    const task1 = createTodoItem("Mow Lawn", "Time to mow the lawn", formattedDate, "High", ["Don't forget to wear sunscreen"], ["Wear sunscreen", "Mow the lawn"]) 
+    const task2 = createTodoItem("Scratch cat", "Let's scratch the cat", formattedDate, "High", ["Don't forget to feed the cat"], ["Feed the cat"])
     
     content.appendChild(itemsContent([task1, task2]));
 
