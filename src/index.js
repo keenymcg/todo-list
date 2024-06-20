@@ -24,16 +24,20 @@ function createProject(name) {
 import itemsContent from "./itemContent";
 import projectContent from './projContent.js';
 import addProjectClickListener from './projClickListener.js';
+import projectAdd from "./projectUI.js";
 
 
 document.addEventListener('DOMContentLoaded', () => {
+    const todoListApp = new ToDoListApp();
+    console.log(todoListApp);
+
     const content = document.getElementById('content'); // Get the content div
+
+    // SEEDING DATA FOR TESTING
     const date = new Date(2024, 5, 27);
     const formattedDate = format(date, 'MMMM d, yyyy');
     const task1 = createTodoItem("Mow Lawn", "Time to mow the lawn", formattedDate, "High", ["Don't forget to wear sunscreen"], ["Wear sunscreen", "Mow the lawn"]) 
     const task2 = createTodoItem("Scratch cat", "Let's scratch the cat", formattedDate, "High", ["Don't forget to feed the cat"], ["Feed the cat"])
-    
-    content.appendChild(itemsContent([task1, task2]));
 
     // Test ToDoListApp & Populating Projects
     const project1 = createProject("Home");
@@ -42,11 +46,12 @@ document.addEventListener('DOMContentLoaded', () => {
     project2.todoItems.push(task2); // Giving project2 ownership of task2
     console.log(project1); // Successfully added task1 to project1
 
-    const todoListApp = new ToDoListApp();
     todoListApp.addExistingProject(project1); 
     todoListApp.addExistingProject(project2);
-    console.log(todoListApp);
 
+    content.appendChild(projectContent(todoListApp.projects)); // INITIAL PAGE SHOWS LIST OF PROJECTS
+    
+    
     const navItems = document.querySelectorAll('nav button');
     navItems.forEach((item) => {
         item.addEventListener('click', (e) => {
@@ -57,6 +62,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 addProjectClickListener(todoListApp, content); // Add event listener to each project name to display project's todoItems
             } else if (e.target.textContent === 'Show All To Do Items') {
                 content.appendChild(itemsContent([task1, task2]));
+            } else if (e.target.textContent === '+ New Project') {
+                console.log('New Project Button Clicked');
+                const projAdd = document.getElementById('projAdd')
+                projAdd.appendChild(projectAdd(todoListApp)); 
             }
         });
     });
