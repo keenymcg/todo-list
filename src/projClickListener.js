@@ -1,4 +1,5 @@
-// projectClickListener.js
+// Purpose: Add an event listener to each project in the projects list that displays the todoItems for the project that was clicked
+
 import itemsContent from "./itemContent";
 
 export default function addProjectClickListener(todoListApp, content) {
