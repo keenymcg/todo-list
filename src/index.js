@@ -2,6 +2,18 @@ import { format } from 'date-fns';
 import './styles/style.scss';
 import { ToDoItem, Project, ToDoListApp } from './classes.js';
 
+const todoListApp = new ToDoListApp(); // create our ToDoListApp instance
+const content = document.getElementById('content'); // Get the content div
+
+export function renderProjects() {
+    content.innerHTML = ''; // Clear existing projects
+    content.appendChild(projectContent(todoListApp.projects)); // Append updated list
+}
+
+export function deleteProject(project) {
+    todoListApp.removeProject(project);
+    renderProjects();
+}
 
 // Factory Functions - clean way to create instances of objects
     // for example when accepting user input, write: document.getElementById('todoForm').addEventListener('submit', function(event) { event.preventDefault();...
@@ -28,10 +40,7 @@ import projectAdd from "./projectUI.js";
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    const todoListApp = new ToDoListApp();
     console.log(todoListApp);
-
-    const content = document.getElementById('content'); // Get the content div
 
     // SEEDING DATA FOR TESTING
     const date = new Date(2024, 5, 27);
@@ -45,12 +54,10 @@ document.addEventListener('DOMContentLoaded', () => {
     project1.todoItems.push(task1); // Giving project1 ownership of task1
     project2.todoItems.push(task2); // Giving project2 ownership of task2
     console.log(project1); // Successfully added task1 to project1
-
     todoListApp.addExistingProject(project1); 
     todoListApp.addExistingProject(project2);
 
-    content.appendChild(projectContent(todoListApp.projects)); // INITIAL PAGE SHOWS LIST OF PROJECTS
-    
+    renderProjects(); // INITIAL PAGE SHOWS LIST OF PROJECTS
     
     const navItems = document.querySelectorAll('nav button');
     navItems.forEach((item) => {
@@ -71,3 +78,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+

@@ -1,3 +1,4 @@
+import { renderProjects, deleteProject } from './index.js';
 
 export default function projectContent(projects) {
     const container = document.createElement('div');
@@ -25,6 +26,14 @@ export default function projectContent(projects) {
 
             container.appendChild(div);
         })
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'X';
+        container.appendChild(deleteBtn);
+        deleteBtn.addEventListener('click', () => {
+            deleteProject(project);
+            renderProjects();
+        });
     });
     return container;
 };
