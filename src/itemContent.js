@@ -1,11 +1,16 @@
 import { formatDistanceToNow } from 'date-fns';
 
-function itemsContent(items) {
+function itemsContent(allProjects) {
     
     const container = document.createElement('div');
 
+    // Take array of Project objects and reduce it to a single array of ToDoItem objects
+    const items = allProjects.reduce((acc, project) => {
+        return acc.concat(project.todoItems);
+    }, []); 
+
     items.forEach(item => {
-        function pastOrPresent() {
+        function pastOrPresent() { // Function to determine if the to-do item's dueDate is in the past or present
             const now = new Date();
             const itemDate = new Date(item.dueDate);
             const distance = formatDistanceToNow(itemDate, { addSuffix: true });
@@ -16,7 +21,6 @@ function itemsContent(items) {
                 return distance.replace('about', '').replace('over', ''); // "1 day ago", "2 days ago", etc.
             }
         };
-
 
         const div = document.createElement('div');
         const h3 = document.createElement('h3');

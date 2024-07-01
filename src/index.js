@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 addProjectClickListener(todoListApp, content); // Add event listener to each project name to display project's todoItems
             } else if (e.target.textContent === 'Show All To Do Items') {
                 content.innerHTML = '';
-                content.appendChild(itemsContent([task1, task2]));
+                content.appendChild(itemsContent(todoListApp.projects));
             } else if (e.target.textContent === '+ New Project') {
                 console.log('New Project Button Clicked');
                 const projAdd = document.getElementById('projAdd')
