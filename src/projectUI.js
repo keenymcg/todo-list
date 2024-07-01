@@ -1,6 +1,8 @@
 // import { Project } from './classes.js';
 import { renderProjects } from './index.js';
 
+// CREATE AND DISPLAY A NEW PROJECT
+
 function projectAdd(todoListApp) {
     const container = document.createElement('div');
 
