@@ -49,6 +49,11 @@ class Project {
         this.todoItems.splice(index, 1);
     }
 
+    // remove all ToDoItems from a project
+    removeAllTodos() {
+        this.todoItems = [];
+    }
+
     editProject(newName) {
         this.name = newName;
     }

@@ -12,6 +12,8 @@ export function renderProjects() {
 
 export function deleteProject(project) {
     todoListApp.removeProject(project);
+    project.removeAllTodos();
+    console.log(project)
     renderProjects();
 }
 
@@ -53,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const project2 = createProject("Work"); // Use factory function to create new project instances named Home and Work
     project1.todoItems.push(task1); // Giving project1 ownership of task1
     project2.todoItems.push(task2); // Giving project2 ownership of task2
-    console.log(project1); // Successfully added task1 to project1
+    // console.log(project1); // Successfully added task1 to project1
     todoListApp.addExistingProject(project1); 
     todoListApp.addExistingProject(project2);
 
