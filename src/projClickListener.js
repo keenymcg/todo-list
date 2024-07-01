@@ -3,14 +3,19 @@
 import itemsContent from "./itemContent";
 
 export default function addProjectClickListener(todoListApp, content) {
-    const projectsList = document.querySelectorAll('h2'); // Get all h2 elements
-    projectsList.forEach((project) => { // Loop through each h2 element
-        project.addEventListener('click', (e) => { // Add an event listener to each h2 element
-            console.log("You clicked"); // Success
-            content.innerHTML = ''; 
-            const projectIndex = todoListApp.projects.findIndex(project => project.name === e.target.textContent); // Find the index of the project that matches the h2 element's text content
-            // console.log(itemsContent(todoListApp.projects[projectIndex].todoItems)); // Success
-            content.appendChild(itemsContent(todoListApp.projects[projectIndex].todoItems)); // Display the todoItems for the project that was clicked
+    const projectNames = document.querySelectorAll('h2'); // Get all h2 elements
+    projectNames.forEach((projectName) => { // Loop through each h2 element
+        projectName.addEventListener('click', (e) => { // Add an event listener to each h2 element
+            console.log("You clicked on a project."); // Log success
+            const clickedProjectName = e.target.textContent; // Get the text content of the clicked h2 element
+            const clickedProject = todoListApp.projects.find(project => project.name === clickedProjectName); // Find the project instance with the same name
+
+            if (clickedProject) { // If a matching project is found
+                content.innerHTML = ''; 
+                content.appendChild(itemsContent([clickedProject])); // Display the todoItems for the found project
+            } else {
+                console.error("Project not found."); // Error handling if no matching project is found
+            }
         })
     })
 };

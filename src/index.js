@@ -60,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
     todoListApp.addExistingProject(project2);
 
     renderProjects(); // INITIAL PAGE SHOWS LIST OF PROJECTS
+    addProjectClickListener(todoListApp, content); // Add event listener to each project name to display project's todoItems
     
     const navItems = document.querySelectorAll('nav button');
     navItems.forEach((item) => {
@@ -68,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.target.textContent === 'Projects') {
                 content.innerHTML = '';
                 content.appendChild(projectContent(todoListApp.projects)); // Display all projects
-                addProjectClickListener(todoListApp, content); // Add event listener to each project name to display project's todoItems
+                addProjectClickListener(todoListApp, content);
             } else if (e.target.textContent === 'Show All To Do Items') {
                 content.innerHTML = '';
                 content.appendChild(itemsContent(todoListApp.projects));
@@ -76,6 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log('New Project Button Clicked');
                 const projAdd = document.getElementById('projAdd')
                 projAdd.appendChild(projectAdd(todoListApp));
+                // ISSUE: h2's stop listening for click when a new project is added. Need to refresh page or click Projects button to reset event listeners
             }
         });
     });
