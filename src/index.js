@@ -5,17 +5,22 @@ import { ToDoItem, Project, ToDoListApp } from './classes.js';
 const todoListApp = new ToDoListApp(); // create our ToDoListApp instance
 const content = document.getElementById('content'); // Get the content div
 
+export function renderItems(project) {
+    content.innerHTML = '';
+    content.appendChild(itemsContent([project]));
+};
+
 export function renderProjects() {
     content.innerHTML = ''; // Clear existing projects
     content.appendChild(projectContent(todoListApp.projects)); // Append updated list
-}
+};
 
 export function deleteProject(project) {
     todoListApp.removeProject(project);
     project.removeAllTodos();
     console.log(project)
     renderProjects();
-}
+};
 
 // Factory Functions - clean way to create instances of objects
     // for example when accepting user input, write: document.getElementById('todoForm').addEventListener('submit', function(event) { event.preventDefault();...
@@ -25,20 +30,20 @@ export function deleteProject(project) {
     // const priority = document.getElementById('priority').value;
     // then run the func: createToDoItem(title, description, dueDate, priority); <-- looks a little different than this example
     // console.log(todoItem);
-function createTodoItem(title, description, dueDate, priority, notes = [], checklist = []) {
+export function createTodoItem(title, description, dueDate, priority, notes = [], checklist = []) {
     return new ToDoItem(title, description, dueDate, priority, notes, checklist);
-}
+};
 
 function createProject(name) {
     return new Project(name);
-}
+};
 
 // module.exports = { ToDoItem, Project, ToDoListApp }; // Exported for Jest testing purposes (at least... maybe other purposes too)
 
 import itemsContent from "./itemContent";
 import projectContent from './projContent.js';
 import addProjectClickListener from './projClickListener.js';
-import projectAdd from "./projectUI.js";
+import { projectAdd, navButtonSwitch } from "./projectUI.js";
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -65,10 +70,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const navItems = document.querySelectorAll('nav button');
     navItems.forEach((item) => {
         item.addEventListener('click', (e) => {
-
             if (e.target.textContent === 'Projects') {
                 content.innerHTML = '';
                 content.appendChild(projectContent(todoListApp.projects)); // Display all projects
+                navButtonSwitch('+ New Project');
                 addProjectClickListener(todoListApp, content);
             } else if (e.target.textContent === 'Show All To Do Items') {
                 content.innerHTML = '';
