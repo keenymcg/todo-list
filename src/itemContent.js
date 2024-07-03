@@ -20,6 +20,7 @@ function itemsContent(allProjects) {
             } else {
                 return distance.replace('about', '').replace('over', ''); // "1 day ago", "2 days ago", etc.
             }
+            // ISSUE: date format reverts XXXX-XX-XX style when item is too far in the past or future
         };
 
         const div = document.createElement('div');
