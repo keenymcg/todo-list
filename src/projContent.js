@@ -1,4 +1,5 @@
 import { renderProjects, deleteProject } from './index.js';
+import { format } from 'date-fns';
 
 export default function projectContent(projects) {
     const container = document.createElement('div');
@@ -19,7 +20,7 @@ export default function projectContent(projects) {
             const h4 = document.createElement('h4');
 
             h3.textContent = item.title;
-            h4.textContent = item.dueDate;
+            h4.textContent = format(item.dueDate, 'MMMM d, yyyy');
 
             div.appendChild(h3);
             div.appendChild(h4);
