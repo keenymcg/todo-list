@@ -100,5 +100,6 @@ export function toDoItemAdd(project) {
         container.appendChild(itemsContent([project])); // Re-render items for the current project
         
         renderItems(project);
+        toDoItemAdd(project); // Re-add the event listener for the new item button
     });
 };
