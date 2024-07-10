@@ -1,4 +1,5 @@
 import { format, formatDistanceToNow } from 'date-fns';
+import { renderItems } from './index.js';
 
 function itemsContent(allProjects) {
     
@@ -37,6 +38,15 @@ function itemsContent(allProjects) {
         div.appendChild(p);
         div.appendChild(h4);
         div.appendChild(h5);
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'X';
+        div.appendChild(deleteBtn);
+        deleteBtn.addEventListener('click', () => {
+            const currentProject = allProjects.find(project => project.todoItems.includes(item)); // Find the project that contains the item
+            currentProject.removeTodo();
+            renderItems(currentProject);
+        });
 
         container.appendChild(div);
     })
