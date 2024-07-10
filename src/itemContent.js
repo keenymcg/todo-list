@@ -1,4 +1,4 @@
-import { formatDistanceToNow } from 'date-fns';
+import { format, formatDistanceToNow } from 'date-fns';
 
 function itemsContent(allProjects) {
     
@@ -20,7 +20,6 @@ function itemsContent(allProjects) {
             } else {
                 return distance.replace('about', '').replace('over', ''); // "1 day ago", "2 days ago", etc.
             }
-            // ISSUE: date format reverts XXXX-XX-XX style when item is too far in the past or future
         };
 
         const div = document.createElement('div');
@@ -31,7 +30,7 @@ function itemsContent(allProjects) {
 
         h3.textContent = item.title;
         p.textContent = item.description;
-        h4.textContent = `Due ${pastOrPresent()} on ${item.dueDate}`;
+        h4.textContent = `Due ${pastOrPresent()} on ${format(item.dueDate, 'MMMM d, yyyy')}`;
         h5.textContent = `Priority: ${item.priority}`;
 
         div.appendChild(h3);
