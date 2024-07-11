@@ -1,6 +1,6 @@
 // Purpose: Add an event listener to each project in the projects list that displays the todoItems for the project that was clicked
 
-import itemsContent from "./itemContent";
+import { itemsContent } from "./itemContent";
 import { navButtonSwitch, toDoItemAdd } from "./projectUI";
 
 export default function addProjectClickListener(todoListApp, content) {
@@ -21,7 +21,6 @@ export default function addProjectClickListener(todoListApp, content) {
                 console.error("Project not found."); // Error handling if no matching project is found
             }
 
-            // ISSUE: Once a new item is added, clicking "+ New To Do Item" again does not display the form. Need to refresh page or click Projects button to reset event listeners
             toDoItemAdd(clickedProject);
         })
     })
