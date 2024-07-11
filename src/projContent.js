@@ -3,9 +3,6 @@ import { format } from 'date-fns';
 
 export default function projectContent(projects) {
     const container = document.createElement('div');
-    // const newProjBtn = document.createElement('button');
-    // newProjBtn.textContent = '+ New Project'
-    // container.appendChild(newProjBtn);
 
     // Create h2, give it the project name, and append it to the content div
     projects.forEach(project => {
