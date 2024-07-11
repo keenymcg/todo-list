@@ -1,7 +1,7 @@
 import { format, formatDistanceToNow } from 'date-fns';
 import { renderItems } from './index.js';
 
-function itemsContent(allProjects) {
+export function itemsContent(allProjects) {
     
     const container = document.createElement('div');
 
@@ -42,15 +42,34 @@ function itemsContent(allProjects) {
         const deleteBtn = document.createElement('button');
         deleteBtn.textContent = 'X';
         div.appendChild(deleteBtn);
-        deleteBtn.addEventListener('click', () => {
-            const currentProject = allProjects.find(project => project.todoItems.includes(item)); // Find the project that contains the item
-            currentProject.removeTodo();
-            renderItems(currentProject);
-        });
 
+        deleteBtn.addEventListener('click', () => {
+            const projAddBtn = document.getElementById('projAdd');
+            const displayStyle = window.getComputedStyle(projAddBtn).display;
+            const currentProject = allProjects.find(project => project.todoItems.includes(item)); // Find the project that contains the item
+
+            if (displayStyle === 'block') {
+                currentProject.removeTodo();
+                renderItems(currentProject);
+            } else if (displayStyle === 'none') {
+                currentProject.removeTodo();
+                allProjects.forEach(project => { // Loop through each project
+                    renderItems(project); // Render the items for each project
+                });
+            }
+        });
         container.appendChild(div);
     })
     return container;
 };
 
-export default itemsContent;
+// export function allItemsContent(allProjects) {
+//     const container = document.createElement('div');
+//     allProjects.forEach(project => {
+//         const h2 = document.createElement('h2');
+//         h2.textContent = project.name;
+//         container.appendChild(h2);
+//         container.appendChild(itemsContent(project));
+//     })
+//     return container;
+// }
