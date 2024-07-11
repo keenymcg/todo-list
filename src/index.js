@@ -40,10 +40,10 @@ function createProject(name) {
 
 // module.exports = { ToDoItem, Project, ToDoListApp }; // Exported for Jest testing purposes (at least... maybe other purposes too)
 
-import itemsContent from "./itemContent";
+import { itemsContent } from "./itemContent";
 import projectContent from './projContent.js';
 import addProjectClickListener from './projClickListener.js';
-import { projectAdd, navButtonSwitch } from "./projectUI.js";
+import { projectAdd, navButtonSwitch, hideAddBtn, showAddBtn } from "./projectUI.js";
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -68,21 +68,39 @@ document.addEventListener('DOMContentLoaded', () => {
     addProjectClickListener(todoListApp, content); // Add event listener to each project name to display project's todoItems
     
     const navItems = document.querySelectorAll('nav button');
+    const projAdd = document.getElementById('projAdd')
     navItems.forEach((item) => {
         item.addEventListener('click', (e) => {
             if (e.target.textContent === 'Projects') {
                 content.innerHTML = '';
                 content.appendChild(projectContent(todoListApp.projects)); // Display all projects
+                showAddBtn(); // Show the add button if it was hidden by the Show All To Do Items button
                 navButtonSwitch('+ New Project');
+
+                // Remove existing event listeners from the '+ New Project' button by cloning it
+                const oldAddBtn = document.getElementById('projAdd');
+                const newAddBtn = oldAddBtn.cloneNode(true);
+                oldAddBtn.parentNode.replaceChild(newAddBtn, oldAddBtn);
+
+                let formAdded = false; // Flag to track if the form has been added
+
+                // Add the correct event listener to the new '+ New Project' button
+                newAddBtn.addEventListener('click', () => {
+                    if (!formAdded) { // Check if the form has not been added
+                        const formContainer = projectAdd(todoListApp); // Assuming projectAdd returns the form element for adding a new project
+                        newAddBtn.appendChild(formContainer); // Display the form for adding a new project
+                        formAdded = true; // Set the flag to true to prevent further additions
+                    }
+                });
+
                 addProjectClickListener(todoListApp, content);
             } else if (e.target.textContent === 'Show All To Do Items') {
                 content.innerHTML = '';
+                hideAddBtn(); // Because we can't add a new ToDoItem from this view
                 content.appendChild(itemsContent(todoListApp.projects));
             } else if (e.target.textContent === '+ New Project') {
                 console.log('New Project Button Clicked');
-                const projAdd = document.getElementById('projAdd')
                 projAdd.appendChild(projectAdd(todoListApp));
-                // ISSUE: h2's stop listening for click when a new project is added. Need to refresh page or click Projects button to reset event listeners
             }
         });
     });
