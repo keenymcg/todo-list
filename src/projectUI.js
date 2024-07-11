@@ -1,9 +1,9 @@
 // import { Project } from './classes.js';
 import { createTodoItem, renderProjects, renderItems } from './index.js';
-import itemsContent from './itemContent.js';
+import { itemsContent } from './itemContent.js';
+import addProjectClickListener from './projClickListener.js';
 
 // CREATE AND DISPLAY A NEW PROJECT
-
 export function projectAdd(todoListApp) {
     const container = document.createElement('div');
 
@@ -15,13 +15,17 @@ export function projectAdd(todoListApp) {
 
     const submit = document.createElement('button');
     submit.textContent = 'Submit';
+    container.appendChild(submit); // Append the submit button
+    
     submit.addEventListener('click', () => {
         const projectName = input.value;
         todoListApp.addProject(projectName);
         // console.log(todoListApp.projects); // Call renderProjects from Index.js to update the UI
+        container.removeChild(input); // Remove the input field after submission
+        container.removeChild(submit); // Remove the submit button after submission
         renderProjects();
-    });
-    container.appendChild(submit);  
+        addProjectClickListener(todoListApp, document.getElementById('content'));
+    }); 
 
     return container;
 };
@@ -73,13 +77,22 @@ export function toDoItemAdd(project) {
     form.appendChild(prioritySelect);
     form.appendChild(submitButton);
 
-    const newItemBtn = document.getElementById('projAdd');
-    newItemBtn.innerHTML = ''; // Clear the button
-    newItemBtn.appendChild(form); // Append the form 
+    const newItemBtn = document.getElementById('projAdd'); // Ensure newItemBtn is defined
 
+    document.getElementById('projAdd').addEventListener('click', () => {
+        if (!newItemBtn.contains(form)) { // Check if the form is not already appended
+            newItemBtn.innerHTML = ''; // Clear the button only if the form isn't already there
+            newItemBtn.appendChild(form); // Append the form
+        }
+    });
     // Event listener for form submission
     form.addEventListener('submit', function(event) {
         event.preventDefault(); // Prevent actual form submission
+
+        // ISSUE / FUTURE: Make a checkError function to check for empty fields
+        // maybe this goes after the collected form values...
+        // it could/would look like: if checkError() {
+        // return an error message and stop following code from executing; }
 
         // Collect form values
         const title = document.getElementById('title').value;
@@ -92,7 +105,7 @@ export function toDoItemAdd(project) {
         project.addTodo(todoItem);
 
         // Clear newItem button for next input
-        newItemBtn.innerHTML = ''; // Clear the button
+        newItemBtn.removeChild(form); // Remove the form after submission
         newItemBtn.textContent = '+ New To Do Item'; // Reset the button text
 
         // Re-render the items to show the updated list
@@ -103,3 +116,13 @@ export function toDoItemAdd(project) {
         toDoItemAdd(project); // Re-add the event listener for the new item button
     });
 };
+
+export function hideAddBtn() {
+    const addBtn = document.getElementById('projAdd');
+    addBtn.style.display = 'none';
+}
+
+export function showAddBtn(element) {
+    const addBtn = document.getElementById('projAdd');
+    addBtn.style.display = 'block';
+}
