@@ -15,7 +15,7 @@ The todo list application is designed to help users keep track of their tasks an
 
 ## Features
 
-- Create, update, and delete tasks
+- Create, update, and delete tasks that persist across sessions due to localStorage
 - Mark tasks as completed
 - Filter tasks based on their status
 - Sort tasks by priority or due date
@@ -31,3 +31,4 @@ The project leverages the following technologies:
 - Classes
 - Modular programming
 - Webpack
+- Local Storage
