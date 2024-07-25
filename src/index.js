@@ -3,33 +3,57 @@ import './styles/style.scss';
 import { ToDoItem, Project, ToDoListApp } from './classes.js';
 
 const todoListApp = new ToDoListApp(); // create our ToDoListApp instance
-const content = document.getElementById('content'); // Get the content div
+const content = document.getElementById('content'); // Grab/Define the content div for global use
 
 // LOCAL STORAGE FUNCTIONS
-export function saveToLocalStorage(todoListApp) {
-    const data = JSON.stringify(todoListApp.projects);
+export function saveProjToLocalStorage(projectInstance) {
+    // Retrieve existing projects from local storage
+    const existingData = localStorage.getItem('todoListApp');
+    console.log(existingData);
+    let projects = existingData ? JSON.parse(existingData) : [];
+
+    // Add the new project to the list
+    projects.push(projectInstance);
+    console.log(projects);
+
+    // Save the updated list back to local storage
+    const data = JSON.stringify(projects);
+    console.log(data);
+    localStorage.setItem('todoListApp', data);
+};
+
+export function saveItemToLocalStorage(projectName, todoItem) {
+    // Retrieve existing projects from local storage
+    const existingData = localStorage.getItem('todoListApp');
+    let projects = JSON.parse(existingData);
+
+    // Find the localStorage project instance that matches the project name from the projectName parameter and push the todoItem to its todoItems array
+    const currentProject = projects.find(proj => proj.name === projectName); // Find the localStorage project instance with the same name
+    currentProject.todoItems.push(todoItem);
+    // console.log(currentProject);
+
+    // Save the updated list back to local storage
+    const data = JSON.stringify(projects);
     localStorage.setItem('todoListApp', data);
 };
 
 export function loadFromLocalStorage(todoListApp) {
     const data = localStorage.getItem('todoListApp');
+
     if (data) {
         const projects = JSON.parse(data);
-        projects.forEach(projectData => {
-            const project = new Project(projectData.name);
-            projectData.todoItems.forEach(itemData => {
-                const todoItem = createTodoItem(itemData.title, itemData.description, itemData.dueDate, itemData.priority);
-                project.addTodo(todoItem);
-            });
-            todoListApp.addProject(project);
-        });
-    }
-};
 
-// ISSUE: Move renderItems to ProjectUI or ItemContent? Maybe doesn't belong here
-export function renderItems(project) {
-    content.innerHTML = '';
-    content.appendChild(itemsContent([project]));
+        projects.forEach(project => {
+            todoListApp.addProject(project.name);
+
+            const currentProject = todoListApp.projects.find(proj => proj.name === project.name); // Find the project instance with the same name
+            project.todoItems.forEach(item => {
+                const todoItem = createTodoItem(item.title, item.description, item.dueDate, item.priority);
+                currentProject.addTodo(todoItem);
+            });
+        });
+        console.log(todoListApp);
+    };
 };
 
 // ISSUE: Move renderProjects to ProjectUI or ProjContent? Maybe doesn't belong here since it's about UI
@@ -38,11 +62,24 @@ export function renderProjects() {
     content.appendChild(projectContent(todoListApp.projects)); // Append updated list
 };
 
+// ISSUE: Move renderItems to ProjectUI or ItemContent? Maybe doesn't belong here
+export function renderItems(project) {
+    content.innerHTML = '';
+    content.appendChild(itemsContent([project]));
+};
+
 // ISSUE: Move deleteProject to ProjectUI or ProjContent? Maybe doesn't belong here since it's about modifying data
 export function deleteProject(project) {
     todoListApp.removeProject(project);
     project.removeAllTodos();
     console.log(project);
+    
+    // remove this project from local storage. ISSUE: Adhere to SOLID principles and separate this out into a separate function?
+    const data = localStorage.getItem('todoListApp');
+    const projects = JSON.parse(data);
+    const updatedProjects = projects.filter(proj => proj.name !== project.name);
+    localStorage.setItem('todoListApp', JSON.stringify(updatedProjects));
+
     renderProjects();
 };
 
@@ -62,25 +99,10 @@ import projectContent from './projContent.js';
 import addProjectClickListener from './projClickListener.js';
 import { projectAdd, navButtonSwitch, hideAddBtn, showAddBtn } from "./projectUI.js";
 
-
 document.addEventListener('DOMContentLoaded', () => {
-
+    
+    // localStorage.clear(); // Clear local storage for testing
     loadFromLocalStorage(todoListApp); // Load any existing projects from local storage
-
-    // SEEDING DATA FOR TESTING
-    const date = new Date(2024, 5, 27);
-    const formattedDate = format(date, 'MMMM d, yyyy');
-    const task1 = createTodoItem("Mow Lawn", "Time to mow the lawn", formattedDate, "High", ["Don't forget to wear sunscreen"], ["Wear sunscreen", "Mow the lawn"]) 
-    const task2 = createTodoItem("Scratch cat", "Let's scratch the cat", formattedDate, "High", ["Don't forget to feed the cat"], ["Feed the cat"])
-
-    // Test ToDoListApp & Populating Projects
-    const project1 = createProject("Home");
-    const project2 = createProject("Work"); // Use factory function to create new project instances named Home and Work
-    project1.todoItems.push(task1); // Giving project1 ownership of task1
-    project2.todoItems.push(task2); // Giving project2 ownership of task2
-    // console.log(project1); // Successfully added task1 to project1
-    todoListApp.addExistingProject(project1); 
-    todoListApp.addExistingProject(project2);
 
     renderProjects(); // INITIAL PAGE SHOWS LIST OF PROJECTS
     addProjectClickListener(todoListApp, content); // Add event listener to each project name to display project's todoItems

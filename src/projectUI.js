@@ -1,5 +1,5 @@
 // import { Project } from './classes.js';
-import { createTodoItem, renderProjects, renderItems, saveToLocalStorage } from './index.js';
+import { createTodoItem, renderProjects, renderItems, saveProjToLocalStorage, saveItemToLocalStorage } from './index.js';
 import { itemsContent } from './itemContent.js';
 import addProjectClickListener from './projClickListener.js';
 
@@ -20,15 +20,19 @@ export function projectAdd(todoListApp) {
     submit.addEventListener('click', () => {
         const projectName = input.value;
         todoListApp.addProject(projectName);
-        saveToLocalStorage(todoListApp); // Save to localStorage
-        // console.log(todoListApp.projects); // Call renderProjects from Index.js to update the UI
+
+        // Save to localStorage the newly created Project instance
+        const projectInstance = todoListApp.projects.find(project => project.name === projectName); // Find the project instance with the same name
+        console.log(projectInstance);
+        saveProjToLocalStorage(projectInstance);
+
         container.removeChild(input); // Remove the input field after submission
         container.removeChild(submit); // Remove the submit button after submission
         renderProjects();
         addProjectClickListener(todoListApp, document.getElementById('content'));
     }); 
 
-    return container;
+    return container; 
 };
 
 export function navButtonSwitch(buttonText) {
@@ -104,7 +108,7 @@ export function toDoItemAdd(project) {
         // Create ToDoItem and add it to the project
         const todoItem = createTodoItem(title, description, dueDate, priority);
         project.addTodo(todoItem);
-        // saveToLocalStorage(todoListApp); // Save to localStorage
+        saveItemToLocalStorage(project.name, todoItem);
 
         // Clear newItem button for next input
         newItemBtn.removeChild(form); // Remove the form after submission
