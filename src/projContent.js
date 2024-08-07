@@ -3,35 +3,36 @@ import { format } from 'date-fns';
 
 export default function projectContent(projects) {
     const container = document.createElement('div');
+    container.id = 'project-content';
 
     // Create h2, give it the project name, and append it to the content div
     projects.forEach(project => {
+        const projectHeader = document.createElement('div');
+        projectHeader.style.display = 'flex';
+        projectHeader.style.justifyContent = 'space-between';
+        projectHeader.style.alignItems = 'baseline';
+        
         const h2 = document.createElement('h2');
         h2.textContent = project.name;
-        container.appendChild(h2);
+        projectHeader.appendChild(h2);
 
-        // Display title and dueDate for the todoItems for each project
-        project.todoItems.forEach(item => {
-            const div = document.createElement('div');
-            const h3 = document.createElement('h3');
-            const h4 = document.createElement('h4');
-
-            h3.textContent = item.title;
-            h4.textContent = format(item.dueDate, 'MMMM d, yyyy');
-
-            div.appendChild(h3);
-            div.appendChild(h4);
-
-            container.appendChild(div);
-        })
-
+        // Display delete button for each project
         const deleteBtn = document.createElement('button');
-        deleteBtn.textContent = 'X';
-        container.appendChild(deleteBtn);
+        deleteBtn.id = 'delete-project';
+        deleteBtn.textContent = 'x';
+        projectHeader.appendChild(deleteBtn);
         deleteBtn.addEventListener('click', () => {
             deleteProject(project);
             renderProjects();
         });
+
+        container.appendChild(projectHeader);
+
+        // Display title of the todoItems for each project in comma-separated list on one line
+        const todoItemTitles = project.todoItems.map(item => item.title).join(', ');
+        const p = document.createElement('p');
+        p.textContent = todoItemTitles;
+        container.appendChild(p);
     });
     return container;
 };

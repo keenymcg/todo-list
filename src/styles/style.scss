@@ -6,8 +6,10 @@ body {
     font-family: $font-stack;
 }
 
-.app-wrapper {
+// APP STYLES
 
+.app-wrapper {
+    margin: 2rem;
 }
 
 .app-wrapper h1 {
@@ -47,6 +49,7 @@ nav {
     font-optical-sizing: auto;
     font-weight: 600;
     font-style: normal;
+    margin-bottom: 5px;
 }
 
 nav button {
@@ -57,12 +60,10 @@ nav button {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-
     font-family: "Josefin Sans", sans-serif;
     font-weight: 400;
     font-style: normal;
     font-size: 16px;
-    
     margin: 4px 2px;
     border-radius: 4px;
 }
@@ -71,5 +72,31 @@ nav button {
     border: 1px solid darken($primary-color, 20%);
     padding: 10px;
     margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+#project-content p {
+    color: white;
+    font-family: "Josefin Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    opacity: 70%;
+    margin-top: 2px;
+}
+
+#delete-project {
+    background-color: darken($primary-color, 20%);
+    border: none;
+    color: white;
+    padding: 6px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-family: "Josefin Sans", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+    margin: 4px 2px;
     border-radius: 4px;
 }
