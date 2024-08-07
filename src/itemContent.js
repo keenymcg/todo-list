@@ -44,19 +44,22 @@ export function itemsContent(allProjects) {
         div.appendChild(deleteBtn);
 
         deleteBtn.addEventListener('click', () => {
-            const projAddBtn = document.getElementById('projAdd');
+            const projAddBtn = document.getElementById('project-add');
             const displayStyle = window.getComputedStyle(projAddBtn).display;
             const currentProject = allProjects.find(project => project.todoItems.includes(item)); // Find the project that contains the item
 
             if (displayStyle === 'block') {
                 currentProject.removeTodo();
                 renderItems(currentProject);
+
             } else if (displayStyle === 'none') {
                 currentProject.removeTodo();
                 allProjects.forEach(project => { // Loop through each project
                     renderItems(project); // Render the items for each project
                 });
             }
+
+            deleteItemFromLocalStorage(currentProject, item);
         });
         container.appendChild(div);
     })

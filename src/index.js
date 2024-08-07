@@ -83,6 +83,16 @@ export function deleteProject(project) {
     renderProjects();
 };
 
+// export function deleteItemFromLocalStorage(project, item) {
+//     // remove this item from local storage. ISSUE: Adhere to SOLID principles and separate this out into a separate function?
+//     const data = localStorage.getItem('todoListApp');
+//     const projects = JSON.parse(data); // Retrieve array of existing projects from local storage
+//     const currentProject = projects.find(proj => proj.name === project.name); // Find the localStorage project instance with the same name
+//     const updatedItems = currentProject.todoItems.filter(todoItem => todoItem.title !== item.title);
+//     currentProject.todoItems = updatedItems;
+//     localStorage.setItem('todoListApp', JSON.stringify(projects));
+// };
+
 // Factory Functions - clean way to create instances of objects
 export function createTodoItem(title, description, dueDate, priority, notes = [], checklist = []) {
     return new ToDoItem(title, description, dueDate, priority, notes, checklist);
@@ -97,7 +107,7 @@ function createProject(name) {
 import { itemsContent } from "./itemContent";
 import projectContent from './projContent.js';
 import addProjectClickListener from './projClickListener.js';
-import { projectAdd, navButtonSwitch, hideAddBtn, showAddBtn } from "./projectUI.js";
+import { projectAdd, navButtonSwitch, hideAddBtn, showAddBtn, hideProjBtn, revealShowTodoItemsBtn } from "./projectUI.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     
@@ -108,17 +118,22 @@ document.addEventListener('DOMContentLoaded', () => {
     addProjectClickListener(todoListApp, content); // Add event listener to each project name to display project's todoItems
     
     const navItems = document.querySelectorAll('nav button');
-    const projAdd = document.getElementById('projAdd')
+    const projAdd = document.getElementById('project-add')
     navItems.forEach((item) => {
         item.addEventListener('click', (e) => {
             if (e.target.textContent === 'Projects') {
-                content.innerHTML = '';
-                content.appendChild(projectContent(todoListApp.projects)); // Display all projects
-                showAddBtn(); // Show the add button if it was hidden by the Show All To Do Items button
+                // Organize Nav Button Display
+                hideProjBtn();
+                revealShowTodoItemsBtn(); // Show the "Show All To Do Items" button
+                showAddBtn(); // Show the project-add button and change its text to '+ New Project'
                 navButtonSwitch('+ New Project');
 
+                // Display Projects
+                content.innerHTML = '';
+                content.appendChild(projectContent(todoListApp.projects)); // Display all projects
+
                 // Remove existing event listeners from the '+ New Project' button by cloning it
-                const oldAddBtn = document.getElementById('projAdd');
+                const oldAddBtn = document.getElementById('project-add');
                 const newAddBtn = oldAddBtn.cloneNode(true);
                 oldAddBtn.parentNode.replaceChild(newAddBtn, oldAddBtn);
 

@@ -36,12 +36,11 @@ export function projectAdd(todoListApp) {
 };
 
 export function navButtonSwitch(buttonText) {
-    const addBtnType = document.getElementById('projAdd');
+    const addBtnType = document.getElementById('project-add');
     addBtnType.textContent = buttonText;
 };
 
 export function toDoItemAdd(project) {
-
     const container = document.createElement('div');
 
     // Create form elements
@@ -82,9 +81,9 @@ export function toDoItemAdd(project) {
     form.appendChild(prioritySelect);
     form.appendChild(submitButton);
 
-    const newItemBtn = document.getElementById('projAdd'); // Ensure newItemBtn is defined
+    const newItemBtn = document.getElementById('project-add'); // Ensure newItemBtn is defined
 
-    document.getElementById('projAdd').addEventListener('click', () => {
+    document.getElementById('project-add').addEventListener('click', () => {
         if (!newItemBtn.contains(form)) { // Check if the form is not already appended
             newItemBtn.innerHTML = ''; // Clear the button only if the form isn't already there
             newItemBtn.appendChild(form); // Append the form
@@ -124,11 +123,31 @@ export function toDoItemAdd(project) {
 };
 
 export function hideAddBtn() {
-    const addBtn = document.getElementById('projAdd');
+    const addBtn = document.getElementById('project-add');
     addBtn.style.display = 'none';
 }
 
-export function showAddBtn(element) {
-    const addBtn = document.getElementById('projAdd');
+export function showAddBtn() {
+    const addBtn = document.getElementById('project-add');
     addBtn.style.display = 'block';
+}
+
+export function hideProjBtn() {
+    const projBtn = document.getElementById('projects-button');
+    projBtn.style.display = 'none';
+}
+
+export function showProjBtn() {
+    const projBtn = document.getElementById('projects-button');
+    projBtn.style.display = 'block';
+}
+
+export function hideShowTodoItemsBtn() {
+    const showItemsBtn = document.getElementById('show-todo-items');
+    showItemsBtn.style.display = 'none';
+}
+
+export function revealShowTodoItemsBtn() {
+    const showItemsBtn = document.getElementById('show-todo-items');
+    showItemsBtn.style.display = 'block';
 }
