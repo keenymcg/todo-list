@@ -151,3 +151,14 @@ export function revealShowTodoItemsBtn() {
     const showItemsBtn = document.getElementById('show-todo-items');
     showItemsBtn.style.display = 'block';
 }
+
+export function showProjectH2(projectName) {
+    const projectH2 = document.getElementById('project-h2');
+    projectH2.style.display = 'block';
+    projectH2.textContent = projectName;
+}
+
+export function hideProjectH2() {
+    const projectH2 = document.getElementById('project-h2');
+    projectH2.style.display = 'none';
+}
