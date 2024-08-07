@@ -107,10 +107,10 @@ function createProject(name) {
 import { itemsContent } from "./itemContent";
 import projectContent from './projContent.js';
 import addProjectClickListener from './projClickListener.js';
-import { projectAdd, navButtonSwitch, hideAddBtn, showAddBtn, hideProjBtn, revealShowTodoItemsBtn } from "./projectUI.js";
+import { projectAdd, navButtonSwitch, hideAddBtn, showAddBtn, hideProjBtn, revealShowTodoItemsBtn, showProjBtn, hideShowTodoItemsBtn, hideProjectH2 } from "./projectUI.js";
 
 document.addEventListener('DOMContentLoaded', () => {
-    
+
     // localStorage.clear(); // Clear local storage for testing
     loadFromLocalStorage(todoListApp); // Load any existing projects from local storage
 
@@ -124,6 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.target.textContent === 'Projects') {
                 // Organize Nav Button Display
                 hideProjBtn();
+                hideProjectH2();
                 revealShowTodoItemsBtn(); // Show the "Show All To Do Items" button
                 showAddBtn(); // Show the project-add button and change its text to '+ New Project'
                 navButtonSwitch('+ New Project');
@@ -151,7 +152,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 addProjectClickListener(todoListApp, content);
             } else if (e.target.textContent === 'Show All To Do Items') {
                 content.innerHTML = '';
+                hideShowTodoItemsBtn(); // Hide the "Show All To Do Items" button
                 hideAddBtn(); // Because we can't add a new ToDoItem from this view
+                showProjBtn(); // Show the projects button  
                 content.appendChild(itemsContent(todoListApp.projects));
             } else if (e.target.textContent === '+ New Project') {
                 console.log('New Project Button Clicked');
