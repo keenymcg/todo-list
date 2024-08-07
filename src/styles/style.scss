@@ -20,6 +20,16 @@ body {
     text-shadow: 1px 1px 10px #ffffff;
 }
 
+#project-h2 {
+    color: white;
+    text-align: center;
+    font-family: "Josefin Slab", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    text-shadow: 1px 1px 10px #ffffff;
+}
+
 nav {
     display: flex;
     flex-direction: column;
@@ -31,7 +41,15 @@ nav {
 //     flex-grow: 1;
 // }
 
-button {
+#content h2 {
+    color: white;
+    font-family: "Josefin Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+}
+
+nav button {
     background-color: lighten($primary-color, 10%);
     border: none;
     color: white;
@@ -39,7 +57,12 @@ button {
     text-align: center;
     text-decoration: none;
     display: inline-block;
+
+    font-family: "Josefin Sans", sans-serif;
+    font-weight: 400;
+    font-style: normal;
     font-size: 16px;
+    
     margin: 4px 2px;
     border-radius: 4px;
 }
